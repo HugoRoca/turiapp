@@ -8,4 +8,6 @@
     <string name="register_facebook">Registrar con Facebook</string>
     <string name="register_icloud">Registrar con iCloud</string>
     <string name="already_have_account">Ya tienes cuenta? Iniciar Sesión</string>
+    <string name="password_hint">Password</string>
+    <string name="login_button">Ingresar</string>
 </resources>

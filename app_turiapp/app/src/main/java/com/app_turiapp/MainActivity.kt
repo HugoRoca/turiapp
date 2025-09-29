@@ -1,5 +1,6 @@
 package com.app_turiapp
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
@@ -76,7 +77,8 @@ class MainActivity : AppCompatActivity() {
         
         // Enlace para iniciar sesión
         loginLink.setOnClickListener {
-            showToast("Funcionalidad de login próximamente")
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
         }
     }
     
