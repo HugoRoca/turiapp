@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">TuriApp</string>
+    <string name="login_title">Login</string>
+    <string name="login_subtitle">Crea una cuenta para iniciar</string>
+    <string name="email_hint">Email</string>
+    <string name="register_button">Registrar</string>
+    <string name="register_google">Registrar con Google</string>
+    <string name="register_facebook">Registrar con Facebook</string>
+    <string name="register_icloud">Registrar con iCloud</string>
+    <string name="already_have_account">Ya tienes cuenta? Iniciar Sesión</string>
+</resources>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="light_gray">#F5F7F6</color>
+    <color name="dark_teal">#FF2D5A5A</color>
+    <color name="text_primary">#FF333333</color>
+    <color name="text_secondary">#FF666666</color>
+    <color name="input_border">#FFE0E0E0</color>
+    <color name="separator_gray">#FFCCCCCC</color>
+    <color name="google_blue">#FF4285F4</color>
+    <color name="facebook_blue">#FF1877F2</color>
+    <color name="apple_black">#FF000000</color>
+</resources>
