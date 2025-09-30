@@ -10,4 +10,17 @@
     <string name="already_have_account">Ya tienes cuenta? Iniciar Sesión</string>
     <string name="password_hint">Password</string>
     <string name="login_button">Ingresar</string>
+    <string name="register_title">Registro</string>
+    <string name="username_hint">username</string>
+    <string name="first_name_hint">Nombre</string>
+    <string name="last_name_hint">Apellido</string>
+    <string name="date_of_birth_hint">Fecha de nacimiento</string>
+    <string name="phone_number_hint">Número de celular</string>
+    <string name="terms_and_conditions">Acepto los términos y condiciones</string>
+    
+    <!-- Welcome screens -->
+    <string name="welcome_1_title">Comparte\ntus experiencias</string>
+    <string name="welcome_2_title">Descubre\nlugares\ncercanos</string>
+    <string name="welcome_3_title">Guarda\ntus favoritos</string>
+    <string name="next_button">Siguiente</string>
 </resources>

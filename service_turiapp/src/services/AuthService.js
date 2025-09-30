@@ -100,6 +100,7 @@ class AuthService {
         last_name: userData.last_name,
         phone: userData.phone || null,
         avatar_url: userData.avatar_url || null,
+        birth_date: userData.birth_date || null,
         role: userData.role || 'user',
         is_verified: false,
         is_active: true,

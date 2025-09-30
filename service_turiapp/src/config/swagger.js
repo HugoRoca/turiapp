@@ -77,6 +77,12 @@ const options = {
               description: 'URL del avatar del usuario',
               example: 'https://example.com/avatar.jpg',
             },
+            birth_date: {
+              type: 'string',
+              format: 'date',
+              description: 'Fecha de nacimiento del usuario',
+              example: '1990-05-15',
+            },
             role: {
               type: 'string',
               enum: ['user', 'admin', 'moderator'],
@@ -1025,6 +1031,12 @@ const options = {
               type: 'string',
               description: 'URL del avatar',
               example: 'https://example.com/avatar.jpg',
+            },
+            birth_date: {
+              type: 'string',
+              format: 'date',
+              description: 'Fecha de nacimiento (YYYY-MM-DD)',
+              example: '1990-05-15',
             },
             role: {
               type: 'string',

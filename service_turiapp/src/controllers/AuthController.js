@@ -231,6 +231,11 @@ class AuthController extends BaseController {
           }),
         phone: Joi.string().optional().allow(''),
         avatar_url: Joi.string().uri().optional().allow(''),
+        birth_date: Joi.date().max('now').optional().allow(null, '')
+          .messages({
+            'date.max': 'La fecha de nacimiento no puede ser futura',
+            'date.base': 'La fecha de nacimiento debe tener un formato válido (YYYY-MM-DD)',
+          }),
         role: Joi.string().valid('user', 'admin', 'moderator').default('user'),
       });
 

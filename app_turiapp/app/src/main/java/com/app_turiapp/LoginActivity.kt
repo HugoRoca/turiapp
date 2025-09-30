@@ -1,5 +1,6 @@
 package com.app_turiapp
 
+import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Bundle
 import android.widget.EditText
@@ -13,8 +14,10 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
 import com.app_turiapp.data.model.LoginRequest
+import com.app_turiapp.data.model.User
 import com.app_turiapp.data.provider.ApiProvider
 import kotlinx.coroutines.launch
+import retrofit2.Response
 
 class LoginActivity : AppCompatActivity() {
     
@@ -23,6 +26,7 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var loginButton: LinearLayout
     private lateinit var backButton: ImageView
     private lateinit var apiProvider: ApiProvider
+    private var progressDialog: ProgressDialog? = null
     
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,6 +46,9 @@ class LoginActivity : AppCompatActivity() {
         // Inicializar vistas
         initializeViews()
         
+        // Pre-cargar email si viene del intent
+        preloadEmailFromIntent()
+        
         // Configurar listeners
         setupClickListeners()
     }
@@ -51,6 +58,15 @@ class LoginActivity : AppCompatActivity() {
         passwordInput = findViewById(R.id.password_input)
         loginButton = findViewById(R.id.login_button)
         backButton = findViewById(R.id.back_button)
+    }
+    
+    private fun preloadEmailFromIntent() {
+        val emailFromIntent = intent.getStringExtra("email")
+        if (!emailFromIntent.isNullOrEmpty()) {
+            emailInput.setText(emailFromIntent)
+            // En login no bloqueamos el email, solo lo pre-cargamos
+            // El usuario puede cambiarlo si quiere
+        }
     }
     
     private fun setupClickListeners() {
@@ -79,7 +95,8 @@ class LoginActivity : AppCompatActivity() {
     private fun performLogin(email: String, password: String) {
         lifecycleScope.launch {
             try {
-                showToast("Iniciando sesión...")
+                // Mostrar ProgressDialog
+                showProgressDialog("Iniciando sesión...")
                 
                 val loginRequest = LoginRequest(
                     identifier = email,
@@ -90,11 +107,19 @@ class LoginActivity : AppCompatActivity() {
                 
                 if (response.isSuccessful) {
                     val loginResponse = response.body()
-                    if (loginResponse != null) {
+                    if (loginResponse != null && loginResponse.success) {
                         // Guardar token
-                        apiProvider.saveToken(loginResponse.token)
+                        apiProvider.saveToken(loginResponse.data.token)
                         
-                        showToast("¡Login exitoso! Bienvenido ${loginResponse.user.name ?: loginResponse.user.email}")
+                        val user = loginResponse.data.user
+                        val welcomeMessage = if (user?.first_name != null && user.last_name != null) {
+                            "¡${loginResponse.message}! Bienvenido ${user.first_name} ${user.last_name}"
+                        } else if (user?.username != null) {
+                            "¡${loginResponse.message}! Bienvenido ${user.username}"
+                        } else {
+                            "¡${loginResponse.message}!"
+                        }
+                        showToast(welcomeMessage)
                         
                         // Aquí podrías navegar a la pantalla principal
                         // val intent = Intent(this@LoginActivity, MainActivity::class.java)
@@ -102,7 +127,7 @@ class LoginActivity : AppCompatActivity() {
                         // finish()
                         
                     } else {
-                        showToast("Error: Respuesta vacía del servidor")
+                        showToast("Error: ${loginResponse?.message ?: "Respuesta inválida del servidor"}")
                     }
                 } else {
                     when (response.code()) {
@@ -115,11 +140,34 @@ class LoginActivity : AppCompatActivity() {
                 
             } catch (e: Exception) {
                 showToast("Error de conexión: ${e.message}")
+            } finally {
+                // Ocultar ProgressDialog
+                hideProgressDialog()
             }
         }
     }
     
+    private fun showProgressDialog(message: String) {
+        progressDialog = ProgressDialog(this).apply {
+            setMessage(message)
+            setCancelable(false)
+            setCanceledOnTouchOutside(false)
+            show()
+        }
+    }
+    
+    private fun hideProgressDialog() {
+        progressDialog?.dismiss()
+        progressDialog = null
+    }
+    
     private fun showToast(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    }
+    
+    override fun onDestroy() {
+        super.onDestroy()
+        // Asegurar que el ProgressDialog se cierre si la actividad se destruye
+        hideProgressDialog()
     }
 }

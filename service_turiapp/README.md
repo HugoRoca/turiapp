@@ -241,7 +241,8 @@ curl -X POST http://localhost:3000/api/auth/register \
     "password": "miPassword123",
     "first_name": "Juan",
     "last_name": "Pérez",
-    "phone": "+1234567890"
+    "phone": "+1234567890",
+    "birth_date": "1990-05-15"
   }'
 ```
 

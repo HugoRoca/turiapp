@@ -15,6 +15,7 @@ CREATE TABLE IF NOT EXISTS users (
     last_name VARCHAR(100) NOT NULL,
     phone VARCHAR(20),
     avatar_url VARCHAR(500),
+    birth_date DATE,
     is_verified BOOLEAN DEFAULT FALSE,
     is_active BOOLEAN DEFAULT TRUE,
     role ENUM('user', 'admin', 'moderator') DEFAULT 'user',

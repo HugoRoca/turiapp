@@ -26,6 +26,18 @@
         <activity
             android:name=".LoginActivity"
             android:exported="false" />
+        <activity
+            android:name=".RegisterActivity"
+            android:exported="false" />
+        <activity
+            android:name=".WelcomeActivity1"
+            android:exported="false" />
+        <activity
+            android:name=".WelcomeActivity2"
+            android:exported="false" />
+        <activity
+            android:name=".WelcomeActivity3"
+            android:exported="false" />
     </application>
 
 </manifest>

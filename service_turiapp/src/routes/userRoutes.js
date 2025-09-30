@@ -206,7 +206,7 @@ router.get('/search', jwtMiddleware, async (ctx) => {
  *       500:
  *         $ref: '#/components/responses/InternalServerError'
  */
-router.get('/email', jwtMiddleware, async (ctx) => {
+router.get('/email', async (ctx) => {
   await userController.getUserByEmail(ctx);
 });
 

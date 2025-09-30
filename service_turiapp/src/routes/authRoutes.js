@@ -144,6 +144,11 @@ router.post('/login', async (ctx) => {
  *               avatar_url:
  *                 type: string
  *                 example: "https://example.com/avatar.jpg"
+ *               birth_date:
+ *                 type: string
+ *                 format: date
+ *                 description: Fecha de nacimiento (YYYY-MM-DD)
+ *                 example: "1990-05-15"
  *               role:
  *                 type: string
  *                 enum: [user, admin, moderator]
@@ -173,6 +178,37 @@ router.post('/login', async (ctx) => {
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/ErrorResponse'
+ *     examples:
+ *       example1:
+ *         summary: Registro básico
+ *         value:
+ *           username: "juan_perez"
+ *           email: "juan.perez@example.com"
+ *           password: "miPassword123"
+ *           first_name: "Juan"
+ *           last_name: "Pérez"
+ *           phone: "+1234567890"
+ *           birth_date: "1990-05-15"
+ *       example2:
+ *         summary: Registro sin fecha de nacimiento
+ *         value:
+ *           username: "maria_garcia"
+ *           email: "maria.garcia@example.com"
+ *           password: "miPassword123"
+ *           first_name: "María"
+ *           last_name: "García"
+ *           phone: "+1234567891"
+ *       example3:
+ *         summary: Registro con avatar
+ *         value:
+ *           username: "carlos_lopez"
+ *           email: "carlos.lopez@example.com"
+ *           password: "miPassword123"
+ *           first_name: "Carlos"
+ *           last_name: "López"
+ *           phone: "+1234567892"
+ *           avatar_url: "https://example.com/avatar.jpg"
+ *           birth_date: "1985-12-10"
  */
 router.post('/register', async (ctx) => {
   logger.info('Registration attempt', { ip: ctx.ip, userAgent: ctx.headers['user-agent'] });
