@@ -184,10 +184,14 @@ class RegisterActivity : AppCompatActivity() {
                 if (response.isSuccessful) {
                     val registerResponse = response.body()
                     if (registerResponse != null && registerResponse.success) {
-                        // Guardar token
+                        // Guardar token e información del usuario
                         apiProvider.saveToken(registerResponse.data.token)
-                        
                         val user = registerResponse.data.user
+                        apiProvider.saveUserInfo(
+                            firstName = user?.first_name,
+                            lastName = user?.last_name,
+                            username = user?.username
+                        )
                         val welcomeMessage = if (user?.first_name != null && user.last_name != null) {
                             "¡${registerResponse.message}! Bienvenido ${user.first_name} ${user.last_name}"
                         } else if (user?.username != null) {

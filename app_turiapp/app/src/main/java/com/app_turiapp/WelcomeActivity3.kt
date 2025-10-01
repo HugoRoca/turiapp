@@ -38,7 +38,7 @@ class WelcomeActivity3 : AppCompatActivity() {
     private fun setupClickListeners() {
         nextButton.setOnClickListener {
             // Navegar a la pantalla principal de la app
-            val intent = Intent(this, MainActivity::class.java)
+            val intent = Intent(this, HomeActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)
             finish()

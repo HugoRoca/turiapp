@@ -38,6 +38,9 @@
         <activity
             android:name=".WelcomeActivity3"
             android:exported="false" />
+        <activity
+            android:name=".HomeActivity"
+            android:exported="false" />
     </application>
 
 </manifest>

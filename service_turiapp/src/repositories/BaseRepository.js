@@ -21,18 +21,24 @@ class BaseRepository {
     let sql = `SELECT * FROM ${this.tableName}`;
     const params = [];
 
-    if (Object.keys(conditions).length > 0) {
-      const whereClause = Object.keys(conditions)
-        .map((key) => `${key} = ?`)
+    // Filter out null, undefined, and empty string values
+    const validConditions = Object.entries(conditions).filter(([, value]) => value !== null && value !== undefined && value !== '');
+
+    if (validConditions.length > 0) {
+      const whereClause = validConditions
+        .map(([key]) => `${key} = ?`)
         .join(' AND ');
       sql += ` WHERE ${whereClause}`;
-      params.push(...Object.values(conditions));
+      params.push(...validConditions.map(([, value]) => value));
     }
 
-    if (limit) {
-      sql += ' LIMIT ? OFFSET ?';
-      params.push(limit, offset);
+    // Handle pagination separately
+    if (limit !== null && limit !== undefined) {
+      const limitValue = parseInt(limit, 10);
+      const offsetValue = parseInt(offset || 0, 10);
+      sql += ` LIMIT ${limitValue} OFFSET ${offsetValue}`;
     }
+
 
     return this.query(sql, params);
   }
@@ -72,12 +78,15 @@ class BaseRepository {
     let sql = `SELECT COUNT(*) as count FROM ${this.tableName}`;
     const params = [];
 
-    if (Object.keys(conditions).length > 0) {
-      const whereClause = Object.keys(conditions)
-        .map((key) => `${key} = ?`)
+    // Filter out null, undefined, and empty string values
+    const validConditions = Object.entries(conditions).filter(([, value]) => value !== null && value !== undefined && value !== '');
+
+    if (validConditions.length > 0) {
+      const whereClause = validConditions
+        .map(([key]) => `${key} = ?`)
         .join(' AND ');
       sql += ` WHERE ${whereClause}`;
-      params.push(...Object.values(conditions));
+      params.push(...validConditions.map(([, value]) => value));
     }
 
     const results = await this.query(sql, params);

@@ -2,6 +2,7 @@
 /* eslint-disable max-len */
 const PlaceRepository = require('../repositories/PlaceRepository');
 const logger = require('../utils/logger');
+const { normalizePlaceFilters } = require('../utils/filterUtils');
 
 class PlaceService {
   constructor() {
@@ -11,7 +12,15 @@ class PlaceService {
   async getAllPlaces(filters = {}) {
     try {
       logger.info('Getting all places', { filters });
-      const places = await this.placeRepository.findAll(filters);
+
+      // Normalize boolean and numeric filters
+      const normalizedFilters = normalizePlaceFilters(filters);
+      logger.info('Normalized filters', { original: filters, normalized: normalizedFilters });
+
+      // Extract pagination parameters
+      const { limit, offset, ...whereConditions } = normalizedFilters;
+      
+      const places = await this.placeRepository.findAll(whereConditions, limit, offset || 0);
       logger.info(`Retrieved ${places.length} places`);
       return places;
     } catch (error) {

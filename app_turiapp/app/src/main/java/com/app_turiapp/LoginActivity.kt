@@ -108,10 +108,14 @@ class LoginActivity : AppCompatActivity() {
                 if (response.isSuccessful) {
                     val loginResponse = response.body()
                     if (loginResponse != null && loginResponse.success) {
-                        // Guardar token
+                        // Guardar token e información del usuario
                         apiProvider.saveToken(loginResponse.data.token)
-                        
                         val user = loginResponse.data.user
+                        apiProvider.saveUserInfo(
+                            firstName = user?.first_name,
+                            lastName = user?.last_name,
+                            username = user?.username
+                        )
                         val welcomeMessage = if (user?.first_name != null && user.last_name != null) {
                             "¡${loginResponse.message}! Bienvenido ${user.first_name} ${user.last_name}"
                         } else if (user?.username != null) {

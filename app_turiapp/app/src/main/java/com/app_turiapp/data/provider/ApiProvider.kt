@@ -18,6 +18,9 @@ class ApiProvider(private val context: Context) {
         private const val BASE_URL = "http://192.168.0.25:3000/" // Cambia esta IP por la de tu equipo
         private const val PREFS_NAME = "turiapp_prefs"
         private const val TOKEN_KEY = "auth_token"
+        private const val USER_FIRST_NAME_KEY = "user_first_name"
+        private const val USER_LAST_NAME_KEY = "user_last_name"
+        private const val USER_USERNAME_KEY = "user_username"
     }
     
     private val sharedPreferences: SharedPreferences = 
@@ -70,5 +73,38 @@ class ApiProvider(private val context: Context) {
     
     fun isLoggedIn(): Boolean {
         return getToken() != null
+    }
+    
+    fun saveUserInfo(firstName: String?, lastName: String?, username: String?) {
+        val editor = sharedPreferences.edit()
+        editor.putString(USER_FIRST_NAME_KEY, firstName)
+        editor.putString(USER_LAST_NAME_KEY, lastName)
+        editor.putString(USER_USERNAME_KEY, username)
+        editor.apply()
+    }
+    
+    fun getUserFirstName(): String? {
+        return sharedPreferences.getString(USER_FIRST_NAME_KEY, null)
+    }
+    
+    fun getUserLastName(): String? {
+        return sharedPreferences.getString(USER_LAST_NAME_KEY, null)
+    }
+    
+    fun getUsername(): String? {
+        return sharedPreferences.getString(USER_USERNAME_KEY, null)
+    }
+    
+    fun getDisplayName(): String {
+        val firstName = getUserFirstName()
+        val lastName = getUserLastName()
+        val username = getUsername()
+        
+        return when {
+            !firstName.isNullOrEmpty() && !lastName.isNullOrEmpty() -> "$firstName $lastName"
+            !firstName.isNullOrEmpty() -> firstName
+            !username.isNullOrEmpty() -> username
+            else -> "Usuario"
+        }
     }
 }
