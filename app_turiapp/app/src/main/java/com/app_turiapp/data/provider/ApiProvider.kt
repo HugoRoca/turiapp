@@ -15,7 +15,7 @@ import java.util.concurrent.TimeUnit
 class ApiProvider(private val context: Context) {
     
     companion object {
-        private const val BASE_URL = "http://10.253.98.159:3000/" // Cambia esta IP por la de tu equipo
+        private const val BASE_URL = "http://192.168.0.25:3000/" // Cambia esta IP por la de tu equipo
         private const val PREFS_NAME = "turiapp_prefs"
         private const val TOKEN_KEY = "auth_token"
     }
